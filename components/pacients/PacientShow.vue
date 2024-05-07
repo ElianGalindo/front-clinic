@@ -1,18 +1,14 @@
 <template>
-  <v-row>
-      <!-- Aquí va la tarjeta para mostrar la información del paciente -->
-    <v-card v-for="pacient in pacientes" :key="pacient.email" cols="12" sm="6" md="4">
+  <v-row v-if="pacientes.length > 0">
+    <v-card v-for="pacient in pacientes" :key="pacient.email" cols="12">
       <v-row>
-        <v-card-title>{{ pacient.nombre }}</v-card-title>
-        <v-card-text>
-          <p>Email: {{ pacient.email }}</p>
-          <p>Edad: {{ pacient.edad }}</p>
-          <!-- Agrega aquí más campos si es necesario -->
-        </v-card-text>
+        <p>{{ pacient.nombre }}</p>
+        <p>Email: {{ pacient.email }}</p>
+        <p>Edad: {{ pacient.edad }}</p>
       </v-row>
     </v-card>
   </v-row>
-  <!--<p v-else>Loding Pacients...</p>-->
+  <p v-else>Loding Pacients...</p>
 </template>
 
 <script>
