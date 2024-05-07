@@ -1,12 +1,12 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" style="background-color:#FFF4EC;">
     <v-navigation-drawer
       app
       permanent
       color="#FFDEC8"
       width="208px"
       height="834px"
-      style="border-radius:24px; left:1px;"
+      style="border-radius:0 24px 24px 0; left:1px;"
     >
 
       <v-row style="margin-top:10px;">
@@ -74,4 +74,9 @@ export default {
     background-color: #874C96; /* Cambia el color de fondo cuando se selecciona */
     color:white;
  }
+ html, body{
+    background-color: #FFF4EC;
+    margin: 0;
+    padding: 0;
+  }
 </style>
