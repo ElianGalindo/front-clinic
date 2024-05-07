@@ -27,15 +27,20 @@
       </v-row>
       <v-row style="margin-left:-30px;">
         <v-col cols="9">
-          <v-btn class="btnCitas">
-            <span class="nomBtn">Yesterday Schedule</span>
-          </v-btn>
-          <v-btn class="btnCitas">
-            <span class="nomBtn">Today Schedule</span>
-          </v-btn>
-          <v-btn class="btnCitas">
-            <span class="nomBtn">Tomorrow Schedule</span>
-          </v-btn>
+          <v-row>
+            <v-btn class="btnCitas">
+              <span class="nomBtn">Yesterday Schedule</span>
+            </v-btn>
+            <v-btn class="btnCitas">
+              <span class="nomBtn">Today Schedule</span>
+            </v-btn>
+            <v-btn class="btnCitas">
+              <span class="nomBtn">Tomorrow Schedule</span>
+            </v-btn>
+          </v-row>
+          <v-row>
+            <pacient-show />
+          </v-row>
         </v-col>
         <v-col
           cols="3"
