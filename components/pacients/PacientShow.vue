@@ -1,6 +1,5 @@
 <template>
   <v-col cols="12" style="border:none;">
-    <!--<v-card v-for="pacient in pacientes" :key="pacient.email" cols="12" style="background-color:#FFF4EC;">-->
     <v-row
       v-for="pacient in pacientes"
       :key="pacient.email"
