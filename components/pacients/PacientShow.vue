@@ -1,14 +1,5 @@
 <template>
-  <v-row v-if="pacientes.length > 0">
-    <v-card v-for="pacient in pacientes" :key="pacient.email" cols="12">
-      <v-row>
-        <p>{{ pacient.nombre }}</p>
-        <p>Email: {{ pacient.email }}</p>
-        <p>Edad: {{ pacient.edad }}</p>
-      </v-row>
-    </v-card>
-  </v-row>
-  <p v-else>Loding Pacients...</p>
+
 </template>
 
 <script>
@@ -36,6 +27,23 @@ export default {
           console.log('$$error => ', error)
         })
     }
+  },
+  created () {
+    this.$root.$on('pacient-added', () => {
+      this.loadPacients()
+    })
   }
 }
 </script>
+<style scoped>
+  .pacDatos{
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    margin-top: -5px;
+    font-size: 12px;
+  }
+  .pacDatos1{
+    font-size: 16px;
+  }
+</style>

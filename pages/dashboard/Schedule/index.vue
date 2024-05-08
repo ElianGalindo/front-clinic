@@ -20,9 +20,13 @@
             height="50px"
             color="#01520E"
             style="border-radius: 24px; margin-top: 30px;"
+            @click="showAddPacient = true"
           >
             <span style="color: white; text-transform:none;">New Patients</span>
           </v-btn>
+          <v-dialog v-model="showAddPacient" persistent transition="dialog-bottom-transition" width="500">
+            <add-pacient @close="showAddPacient = false" />
+          </v-dialog>
         </v-col>
       </v-row>
       <v-row style="margin-left:-30px;">
@@ -39,7 +43,7 @@
             </v-btn>
           </v-row>
           <v-row>
-            <pacient-show />
+            <citas-show />
           </v-row>
         </v-col>
         <v-col
@@ -65,6 +69,7 @@
             style="width: 260px; margin-top: 15px;"
           >
             <v-text-field
+              v-model="pacienteId"
               outlined
               rounded
               dense
@@ -77,10 +82,12 @@
             style="width: 260px; margin-top: 15px;"
           >
             <v-text-field
+              v-model="fecha"
               outlined
               rounded
               dense
-              label="Name"
+              label="Fecha"
+              type="date"
             />
           </v-row>
           <v-row
@@ -89,10 +96,12 @@
             style="width: 260px; margin-top: 15px;"
           >
             <v-text-field
+              v-model="hora"
               outlined
               rounded
               dense
-              label="Email"
+              label="Hora"
+              type="time"
             />
           </v-row>
           <v-row
@@ -101,10 +110,11 @@
             style="width: 260px; margin-top: 15px;"
           >
             <v-text-field
+              v-model="motivo"
               outlined
               rounded
               dense
-              label="Phone Number"
+              label="Motivo"
             />
           </v-row>
           <v-row
@@ -113,10 +123,11 @@
             style="width: 260px; margin-top: 15px;"
           >
             <v-text-field
+              v-model="doctor"
               outlined
               rounded
               dense
-              label="Address"
+              label="Doctor"
             />
           </v-row>
           <v-row
@@ -125,10 +136,11 @@
             style="width: 260px; margin-top: 15px;"
           >
             <v-text-field
+              v-model="consultorio"
               outlined
               rounded
               dense
-              label="Date"
+              label="Consultorio"
             />
           </v-row>
           <v-row
@@ -136,6 +148,7 @@
             justify="center"
           >
             <v-btn
+              @click="registrarCita"
               style="
               color: white;
               background-color:#01520E;
@@ -151,9 +164,46 @@
   </v-app>
 </template>
 <script>
+import CitasShow from '~/components/citas/CitasShow.vue'
+import AddPacient from '~/components/pacients/AddPacient.vue'
 export default {
+  components: { AddPacient, CitasShow },
   layout: 'dashboard',
-  auth: true
+  auth: true,
+  data () {
+    return {
+      showAddPacient: false,
+      pacienteId: null,
+      fecha: null,
+      hora: null,
+      motivo: null,
+      doctor: null,
+      consultorio: null
+    }
+  },
+  methods: {
+    registrarCita () {
+      const url = '/citas/create'
+      const data = {
+        pacienteId: this.pacienteId,
+        fecha: this.fecha,
+        hora: this.hora,
+        motivo: this.motivo,
+        doctor: this.doctor,
+        consultorio: this.consultorio
+      }
+      this.$axios.post(url, data)
+        .then((res) => {
+          console.log('$$ res => ', res)
+          if (res.data.message === 'Cita Registered Successfully') {
+            this.$emit('cita-add')
+          }
+        })
+        .catch((error) => {
+          console.log('$$ error => ', error)
+        })
+    }
+  }
 }
 </script>
 <style scoped>
