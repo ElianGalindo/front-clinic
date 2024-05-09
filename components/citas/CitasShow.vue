@@ -2,18 +2,25 @@
   <v-col cols="12">
     <!-- en este renglon estan los botones de citas -->
     <v-row style="margin:10px;">
-      <v-btn class="btnCitas">
+      <v-btn class="btnCitas" @click="loadCitas">
+        <span class="nomBtn">All Schedule</span>
+      </v-btn>
+      <v-btn class="btnCitas" @click="mostrarCitas('2024-06-06')">
         <span class="nomBtn">Yesterday Schedule</span>
       </v-btn>
-      <v-btn class="btnCitas">
+      <v-btn class="btnCitas" @click="mostrarCitas('2024-06-07')">
         <span class="nomBtn">Today Schedule</span>
       </v-btn>
-      <v-btn class="btnCitas">
+      <v-btn class="btnCitas" @click="mostrarCitas('2024-06-08')">
         <span class="nomBtn">Tomorrow Schedule</span>
       </v-btn>
     </v-row>
     <v-row>
-      <v-col cols="12" style="border:none; height: 410px;" class="overflow-y-auto">
+      <v-col
+        cols="12"
+        style="border:none; height: 410px;"
+        class="overflow-y-auto"
+      >
         <v-row
           v-for="cita in citas"
           :key="cita.id"
@@ -77,6 +84,19 @@ export default {
         .catch((error) => {
           console.log('$$error => ', error)
         })
+    },
+    mostrarCitas (dia) {
+      const url = `/citas/get-citas-por-dia/${dia}`
+      this.$axios.get(url)
+        .then((res) => {
+          console.log('$$response => ', res)
+          if (res.data.message === 'success') {
+            this.citas = res.data.citas
+          }
+        })
+        .catch((error) => {
+          console.log('$$error => ', error)
+        })
     }
   }
 }
@@ -128,4 +148,3 @@ export default {
     background-color: #666; /* Color del "pulgar" al arrastrarlo */
   }
 </style>
-
