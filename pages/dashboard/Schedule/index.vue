@@ -1,6 +1,7 @@
 <template>
-  <v-app style="background-color:#FFF4EC; width:100%; margin-top: -20px;">
+  <v-app style="background-color:#FFF4EC; width:auto; margin-top: -20px;">
     <v-col>
+      <!-- aqui se encuentra el buscador y boton agregar -->
       <v-row style="height:110px;">
         <v-col cols="8">
           <v-text-field
@@ -29,26 +30,24 @@
           </v-dialog>
         </v-col>
       </v-row>
+      <!-- aqui se encuentra el mostrar citas y agregar citas -->
       <v-row style="margin-left:-30px;">
+        <!-- en esta columna estan las citas que existen -->
         <v-col cols="9">
+          <!-- en este renglon se muestra la informacion de cada cita -->
           <v-row>
-            <v-btn class="btnCitas">
-              <span class="nomBtn">Yesterday Schedule</span>
-            </v-btn>
-            <v-btn class="btnCitas">
-              <span class="nomBtn">Today Schedule</span>
-            </v-btn>
-            <v-btn class="btnCitas">
-              <span class="nomBtn">Tomorrow Schedule</span>
-            </v-btn>
+            <citas-show ref="citasShow"/>
           </v-row>
-          <v-row>
-            <citas-show />
+          <!-- Aqui van los doctores -->
+          <v-row style="height: 100px;">
+            <doctores-show />
           </v-row>
         </v-col>
+        <!-- Aqui va el formulario para agregar una cita -->
         <v-col
           cols="3"
-          style="background-color: #FFDEC8; border-radius: 24px;"
+          style="background-color: #FFDEC8; border-radius: 24px; height:600px;"
+          class="overflow-y-auto"
           align="center"
           justify="center"
         >
@@ -154,7 +153,9 @@
               background-color:#01520E;
               border-radius:24px;
               width: 260px;
-              margin: 15px;">
+              margin: 15px;
+              margin-top: -10px;
+            ">
               <span>Booking</span>
             </v-btn>
           </v-row>
@@ -196,29 +197,24 @@ export default {
         .then((res) => {
           console.log('$$ res => ', res)
           if (res.data.message === 'Cita Registered Successfully') {
-            this.$emit('cita-add')
+            // this.$emit('citaAgregada')
+            this.pacienteId = ''
+            this.fecha = ''
+            this.hora = ''
+            this.motivo = ''
+            this.doctor = ''
+            this.consultorio = ''
+            const citasShowComponent = this.$refs.citasShow
+            citasShowComponent.loadCitas()
           }
         })
         .catch((error) => {
           console.log('$$ error => ', error)
+          alert('El paciente no existe!!')
         })
     }
   }
 }
 </script>
 <style scoped>
-  .btnCitas{
-    background-color: transparent!important;
-    color: black;
-    width: auto;
-    height: 35px;
-    border-radius: 24px;
-    background-color: none;
-    margin-left: 30px;
-    border: 1px solid black;
-  }
-  .nomBtn{
-    font-family:Arial, Helvetica, sans-serif;
-    text-transform: none;
-  }
 </style>
