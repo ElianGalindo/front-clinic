@@ -57,8 +57,8 @@ export default {
       links: [
         ['mdi-calendar-month', 'Schedule', '/dashboard/Schedule'],
         ['mdi-bed-outline', 'Patients', '/dashboard/Patients'],
-        ['mdi-cart-outline', 'Patients', '/dashboard/Orders'],
-        ['mdi-microscope', 'Patients', '/dashboard/Laboratory']
+        ['mdi-cart-outline', 'Order', '/dashboard/Orders'],
+        ['mdi-microscope', 'Laboratory', '/dashboard/Laboratory']
       ]
     }
   },
