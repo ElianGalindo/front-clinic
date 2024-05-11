@@ -38,82 +38,98 @@
         </v-row>
       </v-col>
     </v-card-actions>
-    <v-dialog v-model="showDialog" persistent width="500" transition="dialog-bottom-transition">
-      <v-card>
+    <v-dialog
+      v-model="showDialog"
+      persistent
+      width="500"
+      transition="dialog-bottom-transition"
+    >
+      <v-card style="background-color: #FFF4EC;">
         <v-card-title>
           Agregar Usuario
         </v-card-title>
         <v-card-text>
-          <v-row>
-            <v-text-field
-              v-model="nombre"
-              label="Nombre"
-              placeholder="Escribe tu nombre"
-              outlined
-            />
-          </v-row>
-          <v-row>
-            <v-text-field
-              v-model="apaterno"
-              label="Apaterno"
-              placeholder="Escribe tu Apaterno"
-              outlined
-            />
-          </v-row>
-          <v-row>
-            <v-text-field
-              v-model="amaterno"
-              label="Amaterno"
-              placeholder="Escribe tu Amaterno"
-              outlined
-            />
-          </v-row>
-          <v-row>
-            <v-text-field
-              v-model="direccion"
-              label="Direccion"
-              placeholder="Escribe tu direccion"
-              outlined
-            />
-          </v-row>
-          <v-row>
-            <v-text-field
-              v-model="telefono"
-              label="Telefono"
-              placeholder="Escribe tu Telefono"
-              outlined
-            />
-          </v-row>
-          <v-row>
-            <v-text-field
-              v-model="emailNuevo"
-              label="Correo"
-              placeholder="Escribe tu correo"
-              outlined
-            />
-          </v-row>
-          <v-row>
-            <v-text-field
-              v-model="passwordNuevo"
-              label="Password"
-              type="password"
-              placeholder="Escribe tu password"
-              outlined
-            />
-          </v-row>
+          <v-col cols="12">
+            <v-row>
+              <v-text-field
+                v-model="nombre"
+                label="Nombre"
+                placeholder="Escribe tu nombre"
+                outlined
+                rounded
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                v-model="apaterno"
+                label="Apaterno"
+                placeholder="Escribe tu Apaterno"
+                outlined
+                rounded
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                v-model="amaterno"
+                label="Amaterno"
+                placeholder="Escribe tu Amaterno"
+                outlined
+                rounded
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                v-model="direccion"
+                label="Direccion"
+                placeholder="Escribe tu direccion"
+                outlined
+                rounded
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                v-model="telefono"
+                label="Telefono"
+                placeholder="Escribe tu Telefono"
+                outlined
+                rounded
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                v-model="emailNuevo"
+                label="Correo"
+                placeholder="Escribe tu correo"
+                outlined
+                rounded
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                v-model="passwordNuevo"
+                label="Password"
+                type="password"
+                placeholder="Escribe tu password"
+                outlined
+                rounded
+              />
+            </v-row>
+          </v-col>
         </v-card-text>
         <v-card-actions>
-          <v-col>
-            <v-col cols="6">
-              <v-btn block color="green" @click="registrarUsuario">
-                <span style="text-transform: none; color:white;">Registrar</span>
-              </v-btn>
-            </v-col>
-            <v-col cols="6">
-              <v-btn block color="red" @click="showDialog = false">
-                <span style="text-transform: none; color:white;">Cancelar</span>
-              </v-btn>
-            </v-col>
+          <v-col cols="12">
+            <v-row>
+              <v-col>
+                <v-btn block color="green" @click="registrarUsuario">
+                  <span style="text-transform: none; color:white;">Registrar</span>
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn block color="red" @click="showDialog = false">
+                  <span style="text-transform: none; color:white;">Cancelar</span>
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-col>
         </v-card-actions>
       </v-card>
