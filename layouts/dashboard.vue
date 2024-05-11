@@ -55,10 +55,10 @@ export default {
       drawer: null,
       selectedIndex: null,
       links: [
+        ['mdi-microscope', 'Dashboard', '/dashboard/Dashboard'],
         ['mdi-calendar-month', 'Schedule', '/dashboard/Schedule'],
         ['mdi-bed-outline', 'Patients', '/dashboard/Patients'],
-        ['mdi-cart-outline', 'Order', '/dashboard/Orders'],
-        ['mdi-microscope', 'Laboratory', '/dashboard/Laboratory']
+        ['mdi-cart-outline', 'Order', '/dashboard/Orders']
       ]
     }
   },
