@@ -31,6 +31,12 @@
                 <v-col>
                   <div class="imgPaciente">
                     <v-img
+                      v-if="paciente.imagen"
+                      :src="require('@/assets/images/paciente.png')"
+                      style="width: 260px; height:158px;"
+                    />
+                    <v-img
+                      v-else
                       :src="require('@/assets/images/paciente.png')"
                       style="width: 260px; height:158px;"
                     />
