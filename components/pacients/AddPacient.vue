@@ -100,19 +100,6 @@
             rounded
           />
         </v-row>
-        <v-row
-          align="center"
-          justify="center"
-          class="inputAdd"
-        >
-          <v-file-input
-            v-model="imagen"
-            outlined
-            label="Imagen"
-            rounded
-            accept="image/*"
-          />
-        </v-row>
       </v-col>
     </v-card-text>
     <v-card-actions>
@@ -136,8 +123,7 @@ export default {
       edad: null,
       sexo: '',
       telefono: null,
-      direccion: null,
-      imagen: null
+      direccion: null
     }
   },
   methods: {
@@ -152,7 +138,7 @@ export default {
         sexo: this.sexo,
         telefono: this.telefono,
         direccion: this.direccion,
-        imagen: this.imagen
+        image: this.image
       }
       this.$axios.post(url, data)
         .then((res) => {
