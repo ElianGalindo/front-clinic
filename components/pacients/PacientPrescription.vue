@@ -1,12 +1,13 @@
 <!-- TablaPaciente.vue -->
 <template>
-  <v-col cols="12">
+  <v-col cols="12" style="padding-bottom: 10px;">
     <v-row
       v-for="prescripcion in prescripciones"
       :key="prescripcion.id"
       align="center"
       justify="center"
       class="notasContenedor"
+      style="margin-bottom: 20px; margin-top: 20px;"
     >
       <v-col cols="9">
         <v-row style="margin-left:20px;">
@@ -52,5 +53,7 @@ export default {
     width: 1100px;
     height: 140px;
     margin-left: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 </style>

@@ -8,6 +8,8 @@ import PacientPrescription from '@/components/pacients/PacientPrescription.vue'
 import PacientCheckup from '@/components/pacients/PacientCheckup.vue'
 import PacientDocuments from '@/components/pacients/PacientDocuments.vue'
 import PacientPayments from '@/components/pacients/PacientPayments.vue'
+import AddPrescription from '@/components/pacients/AddPrescription.vue'
+import AddCheckup from '@/components/pacients/AddCheckup.vue'
 
 Vue.component('UserLogin', UserLogin)
 Vue.component('PacientShow', PacientShow)
@@ -18,3 +20,5 @@ Vue.component('PacientPrescription', PacientPrescription)
 Vue.component('PacientCheckup', PacientCheckup)
 Vue.component('PacientDocuments', PacientDocuments)
 Vue.component('PacientPayments', PacientPayments)
+Vue.component('AddPrescription', AddPrescription)
+Vue.component('AddCheckup', AddCheckup)

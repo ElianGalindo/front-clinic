@@ -5,34 +5,51 @@
     <table>
       <thead>
         <tr>
-          <th>Prescription</th>
-          <th>Checkups</th>
-          <th>Document's</th>
-          <th>Payments</th>
+          <th>Date & Time</th>
+          <th>Tratment</th>
+          <th>Doctor</th>
+          <th>Comments</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody
+        v-for="checkup in checkups"
+        :key="checkup.id"
+      >
         <tr>
-          <td>Hola</td>
-          <td>como</td>
-          <td>estas</td>
-          <td>amigo</td>
+          <td>{{ checkup.fecha }}{{ checkup.hora }}</td>
+          <td>{{ checkup.tratamiento }}</td>
+          <td>{{ checkup.doctor }}</td>
+          <td>{{ checkup.comentarios }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    paciente: {
+      type: Object,
+      required: true
+    },
+    checkups: {
+      type: Array,
+      default: () => []
+    }
+  }
+}
+</script>
 <style scoped>
   .tablaCont{
-    margin-left: -15px;
     align-content: center;
     justify-content: center;
   }
-  table{
-    width: 100%;
-  }
-  th, td {
-    padding-left: 120px; /* Espacio a la izquierda */
-    padding-right: 120px;
+  td, th{
+    padding-left: 100px; /* Espacio a la izquierda */
+    padding-right: 100px;
+    padding-top: 10px; /* Espacio a la izquierda */
+    padding-bottom: 10px;
+    text-align: center;
+    justify-content: center;
   }
 </style>
