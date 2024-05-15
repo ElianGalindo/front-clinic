@@ -98,13 +98,12 @@
       justify="center"
       style="width: 260px; margin-top: 15px;"
     >
-      <v-text-field
-        v-model="archivos"
-        outlined
-        rounded
-        dense
-        label="Archivos"
-      />
+      <input
+          type="file"
+          ref="archivosInput"
+          @change="handleFileUpload"
+          accept=".pdf"
+        />
     </v-row>
     <v-row
       align="center"
@@ -170,19 +169,27 @@ export default {
     }
   },
   methods: {
+    handleFileUpload (event) {
+      const file = event.target.files[0]
+      this.archivos = file
+    },
     registrarCheckup () {
       const url = '/checkup/create'
-      const data = {
-        pacienteId: this.pacienteId,
-        fecha: this.fecha,
-        hora: this.hora,
-        tratamiento: this.tratamiento,
-        doctor: this.doctor,
-        comentarios: this.comentarios,
-        archivos: this.archivos,
-        pagos: this.pagos
-      }
-      this.$axios.post(url, data)
+      const data = new FormData()
+      data.append('pacienteId', this.pacienteId)
+      data.append('fecha', this.fecha)
+      data.append('hora', this.hora)
+      data.append('tratamiento', this.tratamiento)
+      data.append('doctor', this.doctor)
+      data.append('comentarios', this.comentarios)
+      data.append('archivos', this.archivos) // Adjuntar el archivo al FormData
+      data.append('pagos', this.pagos)
+      this.$axios
+        .post(url, data, {
+          headers: {
+            'Content-Type': 'multipart/form-data'// Especificar que estamos enviando datos multipart/form-data
+          }
+        })
         .then((res) => {
           console.log('$$ res => ', res)
           if (res.data.message === 'Checkup Registered Successfully') {

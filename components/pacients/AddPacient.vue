@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card style="background-color:#FFDEC8;">
     <v-card-title>
       Add New Patient
     </v-card-title>
@@ -100,6 +100,18 @@
             rounded
           />
         </v-row>
+        <v-row
+          align="center"
+          justify="center"
+          class="inputAdd"
+        >
+          <input
+            type="file"
+            ref="archivosInput"
+            @change="handleFileUpload"
+            accept="image/*"
+          />
+        </v-row>
       </v-col>
     </v-card-text>
     <v-card-actions>
@@ -123,27 +135,36 @@ export default {
       edad: null,
       sexo: '',
       telefono: null,
-      direccion: null
+      direccion: null,
+      archivo: null
     }
   },
   methods: {
+    handleFileUpload (event) {
+      const file = event.target.files[0]
+      this.archivo = file
+    },
     registrarPaciente () {
       const url = '/pacients/create'
-      const data = {
-        email: this.email,
-        nombre: this.nombre,
-        apaterno: this.apaterno,
-        amaterno: this.amaterno,
-        edad: this.edad,
-        sexo: this.sexo,
-        telefono: this.telefono,
-        direccion: this.direccion,
-        image: this.image
-      }
-      this.$axios.post(url, data)
+      const data = new FormData()
+      data.append('email', this.email)
+      data.append('nombre', this.nombre)
+      data.append('apaterno', this.apaterno)
+      data.append('amaterno', this.amaterno)
+      data.append('edad', this.edad)
+      data.append('sexo', this.sexo)
+      data.append('telefono', this.telefono)
+      data.append('direccion', this.direccion)
+      data.append('archivo', this.archivo)
+      this.$axios
+        .post(url, data, {
+          headers: {
+            'Content-Type': 'multipart/form-data'// Especificar que estamos enviando datos multipart/form-data
+          }
+        })
         .then((res) => {
           console.log('$$ res => ', res)
-          if (res.data.message === 'User Registered Successfully') {
+          if (res.data.message === 'Pacient Registered Successfully') {
             this.$emit('close')
             this.$emit('pacient-added')
           }

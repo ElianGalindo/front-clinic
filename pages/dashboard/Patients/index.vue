@@ -52,9 +52,9 @@
                 <v-col>
                   <div class="imgPaciente">
                     <v-img
-                      v-if="paciente.imagenUrl"
-                      :src="require('@/assets/images/paciente.png')"
-                      style="width: 260px; height:158px;"
+                      v-if="paciente.archivos && paciente.archivos.length > 0"
+                      :src="paciente.archivos[0]"
+                      style="max-width: 100%; height:158px;"
                     />
                     <v-img
                       v-else
@@ -143,7 +143,7 @@
           </v-row>
         </v-col>
         <v-dialog v-model="showDelete" width="300">
-          <v-card>
+          <v-card style="background-color:#FFDEC8;">
             <v-card-title>
               Delete Pacient
             </v-card-title>
@@ -164,8 +164,8 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-dialog v-model="showUpdate">
-          <v-card>
+        <v-dialog v-model="showUpdate" width="350">
+          <v-card style="background-color:#FFDEC8;">
             <v-card-title>
               Update Patient
             </v-card-title>

@@ -27,9 +27,15 @@
           style="background-color: #FFF4EC; margin-top: 10px;"
         >
           <v-col cols="2" align="center" justify="center">
-            <v-avatar
-              size="80"
-              color="black"
+            <v-img
+              v-if="cita.paciente.archivos && cita.paciente.archivos.length > 0"
+              :src="cita.paciente.archivos[0]"
+              style="width: 80px; height: 80px; border-radius: 50%;"
+            />
+            <v-img
+              v-else
+              :src="require('@/assets/images/paciente.png')"
+              style="width: 80px; height:80px; border-radius: 50%;"
             />
           </v-col>
           <v-col cols="5">

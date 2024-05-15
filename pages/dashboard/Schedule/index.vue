@@ -25,7 +25,7 @@
           >
             <span style="color: white; text-transform:none;">New Patients</span>
           </v-btn>
-          <v-dialog v-model="showAddPacient" persistent transition="dialog-bottom-transition" width="500">
+          <v-dialog v-model="showAddPacient" persistent transition="dialog-bottom-transition" width="400">
             <add-pacient @close="showAddPacient = false" />
           </v-dialog>
         </v-col>
