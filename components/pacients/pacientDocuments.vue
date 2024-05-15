@@ -16,7 +16,11 @@
         <tr>
           <td>{{ document.fecha }}{{ document.hora }}</td>
           <td>{{ document.tratamiento }}</td>
-          <td>{{ document.archivos }}</td>
+          <td>
+            <v-icon @click="downloadFile(document.archivos)" style="color: black;">
+              mdi-tray-arrow-down
+            </v-icon>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -32,6 +36,12 @@ export default {
     documents: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    downloadFile (archivoURL) {
+      const newWindow = window.open(archivoURL, '_blank')
+      newWindow.focus()
     }
   }
 }
