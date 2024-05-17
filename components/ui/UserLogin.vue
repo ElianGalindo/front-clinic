@@ -114,6 +114,14 @@
                 rounded
               />
             </v-row>
+            <v-row>
+              <input
+              type="file"
+              ref="archivosInput"
+              @change="handleFileUpload"
+              accept="image/*"
+            />
+            </v-row>
           </v-col>
         </v-card-text>
         <v-card-actions>
@@ -149,7 +157,8 @@ export default {
       apaterno: null,
       amaterno: null,
       direccion: null,
-      telefono: null
+      telefono: null,
+      archivo: null
     }
   },
   methods: {
@@ -171,18 +180,27 @@ export default {
         console.log('$$$ error => ', err)
       })
     },
+    handleFileUpload (event) {
+      const file = event.target.files[0]
+      this.archivo = file
+    },
     registrarUsuario () {
       const url = '/register'
-      const data = {
-        nombre: this.nombre,
-        apaterno: this.apaterno,
-        amaterno: this.amaterno,
-        direccion: this.direccion,
-        telefono: this.telefono,
-        email: this.emailNuevo,
-        password: this.passwordNuevo
-      }
-      this.$axios.post(url, data)
+      const data = new FormData()
+      data.append('email', this.emailNuevo)
+      data.append('nombre', this.nombre)
+      data.append('password', this.passwordNuevo)
+      data.append('apaterno', this.apaterno)
+      data.append('amaterno', this.amaterno)
+      data.append('telefono', this.telefono)
+      data.append('direccion', this.direccion)
+      data.append('archivo', this.archivo)
+      this.$axios
+        .post(url, data, {
+          headers: {
+            'Content-Type': 'multipart/form-data'// Especificar que estamos enviando datos multipart/form-data
+          }
+        })
         .then((res) => {
           console.log('$$ res => ', res)
           if (res.data.message === 'User Registered Successfully') {
