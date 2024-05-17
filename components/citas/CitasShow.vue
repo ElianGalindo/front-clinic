@@ -47,6 +47,20 @@
             <p class="pacDatos"><b>Phone Number: {{ cita.paciente.telefono }}</b></p>
             <p class="pacDatos"><b>E-mail: {{ cita.paciente.email }}</b></p>
             <p class="pacDatos"><b>Address: {{ cita.paciente.direccion }}</b></p>
+            <!-- boton borrar paciente -->
+            <v-btn
+              style="width: 40px; height: 25px; border-radius: 20px; background-color: rgb(237, 96, 96);"
+              @click="deleteCita(cita)"
+            >
+              <v-icon color="white">mdi-trash-can</v-icon>
+            </v-btn>
+            <!-- Boton actualizar paciente -->
+            <v-btn
+              style="width: 40px; height: 25px; border-radius: 20px; background-color: rgb(237, 164, 96);"
+              @click="updateCita(cita)"
+            >
+              <v-icon color="white">mdi-pencil-circle-outline</v-icon>
+            </v-btn>
           </v-col>
           <v-col cols="5">
             <!-- Mostrar información de la cita-->
@@ -61,6 +75,108 @@
         </v-row>
       </v-col>
     </v-row>
+    <!-- Borrar cita -->
+    <v-dialog v-model="showDelete" width="300">
+      <v-card style="background-color:#FFDEC8;">
+        <v-card-title>
+          Delete Appointment
+        </v-card-title>
+        <v-card-text> Are you sure?</v-card-text>
+        <v-card-actions>
+          <v-col>
+              <v-col cols="6">
+                <v-btn block color="green" @click="borrarCita">
+                  <span style="text-transform: none; color:white;">Delete</span>
+                </v-btn>
+              </v-col>
+              <v-col cols="6">
+                <v-btn block color="red" @click="showDelete">
+                  <span style="text-transform: none; color:white;">Cancel</span>
+                </v-btn>
+              </v-col>
+            </v-col>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="showUpdate" width="350">
+          <v-card style="background-color:#FFDEC8;">
+            <v-card-title>
+              Update Patient
+            </v-card-title>
+            <v-card-text>
+              <v-col>
+                <v-row
+                  align="center"
+                  justify="center"
+                  class="inputAdd"
+                >
+                  <v-text-field
+                    v-model="citaToUpdate.fecha"
+                    outlined
+                    label="Nombre"
+                    rounded
+                  />
+                </v-row>
+                <v-row
+                  align="center"
+                  justify="center"
+                  class="inputAdd"
+                >
+                  <v-text-field
+                    v-model="citaToUpdate.hora"
+                    outlined
+                    label="A.paterno"
+                    rounded
+                  />
+                </v-row>
+                <v-row
+                  align="center"
+                  justify="center"
+                  class="inputAdd"
+                >
+                  <v-text-field
+                    v-model="citaToUpdate.motivo"
+                    outlined
+                    label="A.materno"
+                    rounded
+                  />
+                </v-row>
+                <v-row
+                  align="center"
+                  justify="center"
+                  class="inputAdd"
+                >
+                  <v-text-field
+                    v-model="citaToUpdate.doctor"
+                    outlined
+                    label="Phone"
+                    rounded
+                  />
+                </v-row>
+                <v-row
+                  align="center"
+                  justify="center"
+                  class="inputAdd"
+                >
+                  <v-text-field
+                    v-model="citaToUpdate.consultorio"
+                    outlined
+                    label="Address"
+                    rounded
+                  />
+                </v-row>
+              </v-col>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn color="green" class="btnAdd" @click="actualizarCita">
+                <span class="title">Update</span>
+              </v-btn>
+              <v-btn color="red" class="btnAdd" @click="showUpdate = false">
+                <span class="title">Cancel</span>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
   </v-col>
 </template>
 
@@ -68,7 +184,11 @@
 export default {
   data () {
     return {
-      citas: [] // Aquí se almacenarán las citas obtenidas del servidor
+      citas: [],
+      citaToDelete: null,
+      citaToUpdate: {},
+      showDelete: false,
+      showUpdate: false
     }
   },
   mounted () {
@@ -103,6 +223,44 @@ export default {
         .catch((error) => {
           console.log('$$error => ', error)
         })
+    },
+    deleteCita (cita) {
+      this.citaToDelete = cita
+      this.showDelete = true
+    },
+    borrarCita () {
+      const url = `/citas/${this.citaToDelete.id}`
+      this.$axios.delete(url)
+        .then((res) => {
+          console.log('$$ res => ', res)
+          if (res.status === 204) {
+            this.showDelete = false
+            this.loadCitas()
+          }
+        })
+        .catch((err) => {
+          console.log('$$ err => ', err)
+        })
+    },
+    updateCita (cita) {
+      this.citaToUpdate = cita
+      this.showUpdate = true
+    },
+    actualizarCita () {
+      const url = `/citas/${this.citaToUpdate.id}`
+      this.$axios.put(url, this.citaToUpdate)
+        .then((res) => {
+          console.log('$$ res => ', res)
+          if (res.data.message === 'success') {
+            this.showUpdate = false
+            this.loadPacientes()
+          }
+        })
+        .catch((err) => {
+          this.showUpdate = false
+          this.loadCitas()
+          console.log('$$ err => ', err)
+        })
     }
   }
 }
@@ -127,6 +285,15 @@ export default {
     background-color: none;
     margin-left: 30px;
     border: 1px solid black;
+  }
+  .btnAdd {
+    border-radius: 24px;
+    width: 150px;
+    height: 50px;
+  }
+  .title {
+    text-transform: none;
+    color: white;
   }
   .nomBtn{
     font-family:Arial, Helvetica, sans-serif;
