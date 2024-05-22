@@ -49,22 +49,42 @@
             </div>
             <v-row style="margin-top: 15px;">
               <v-col class="add1">
-                <v-icon>mdi-minus</v-icon>
+                <v-icon @click="removeFromCart(producto)">mdi-minus</v-icon>
               </v-col>
               <v-col class="add">
-                <h3>Add</h3>
+                <h3>{{ getProductQuantity(producto) }}</h3>
               </v-col>
               <v-col class="add">
-                <v-icon>mdi-plus</v-icon>
+                <v-icon @click="addToCart(producto)">mdi-plus</v-icon>
               </v-col>
             </v-row>
           </div>
+        </v-col>
+      </v-row>
+       <!-- Carrito -->
+       <v-row>
+        <v-col cols="12">
+          <h2>Carrito de Compras</h2>
+          <v-divider></v-divider>
+          <v-list>
+            <v-list-item v-for="item in cart" :key="item.id">
+              <v-list-item-content>
+                <v-list-item-title>{{ item.nombre }}</v-list-item-title>
+                <v-list-item-subtitle>Cantidad: {{ getProductQuantity(item) }}</v-list-item-subtitle>
+                <v-list-item-subtitle>Precio: {{ item.precio }}</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-divider></v-divider>
+          <h3>Total: {{ getTotalPrice() }}</h3>
+          <v-btn @click="pagarCarrito">Pagar</v-btn>
         </v-col>
       </v-row>
     </v-col>
   </v-app>
 </template>
 <script>
+// import Stripe from 'stripe'
 import AddProduct from '~/components/products/AddProduct.vue'
 export default {
   components: { AddProduct },
@@ -73,7 +93,9 @@ export default {
   data () {
     return {
       productos: [],
-      showAdd: false
+      cart: [],
+      showAdd: false,
+      search: ''
     }
   },
   mounted () {
@@ -93,10 +115,48 @@ export default {
           console.log('$$error => ', error)
         })
     },
-    created () {
-      this.$root.$on('product-added', () => {
-        this.loadPacients()
-      })
+    addToCart (producto) {
+      const index = this.cart.findIndex(item => item.id === producto.id)
+      if (index !== -1) {
+        // Si el producto ya está en el carrito, incrementar la cantidad
+        this.cart[index].cantidad++
+      } else {
+        // Si el producto no está en el carrito, agregarlo
+        this.cart.push({ ...producto, cantidad: 1 })
+      }
+    },
+    removeFromCart (producto) {
+      // Agregar lógica para eliminar el producto del carrito
+      const index = this.cart.findIndex(item => item.id === producto.id)
+      if (index !== -1) {
+        // Obtener la referencia al objeto del carrito
+        const cartItem = this.cart[index]
+        // Reducir la cantidad en 1 si la cantidad es mayor que 1
+        if (cartItem.cantidad > 1) {
+          cartItem.cantidad--
+        } else {
+          // Si la cantidad es 1, eliminar el producto del carrito
+          this.cart.splice(index, 1)
+        }
+      }
+    },
+    getProductQuantity (producto) {
+      const cartItem = this.cart.find(item => item.id === producto.id)
+      return cartItem ? cartItem.cantidad : 0
+    },
+    getTotalPrice () {
+      // Calcular el precio total de los productos en el carrito
+      return this.cart.reduce((total, item) => total + parseFloat(item.precio) * item.cantidad, 0)
+    },
+    async pagarCarrito () {
+      try {
+        const response = await this.$axios.post('/create-stripe-session', {
+          carrito: this.cart
+        })
+        window.location.href = `https://checkout.stripe.com/pay/${response.data.sessionId}`
+      } catch (error) {
+        console.error('Error al iniciar el pago: ', error)
+      }
     }
   }
 }
