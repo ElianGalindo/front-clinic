@@ -21,8 +21,13 @@
           />
         </v-col>
         <v-col>
+          <!-- Boton para agregar producto -->
           <v-btn @click="showAdd = true" style="background-color: rgb(22, 137, 22);">
             <span style="text-transform: none; color: white;">Add Product</span>
+          </v-btn>
+          <!-- Boton para mostrar carrito -->
+          <v-btn @click="showCarrito = true" style="background-color: rgb(22, 137, 22);">
+            <span style="text-transform: none; color: white;">Shop <v-icon>mdi-cart-outline</v-icon></span>
           </v-btn>
           <v-dialog v-model="showAdd" persistent transition="dialog-bottom-transition" width="400">
             <add-product @close="showAdd = false"/>
@@ -62,29 +67,45 @@
         </v-col>
       </v-row>
        <!-- Carrito -->
-       <v-row>
-        <v-col cols="12">
-          <h2>Carrito de Compras</h2>
-          <v-divider></v-divider>
-          <v-list>
-            <v-list-item v-for="item in cart" :key="item.id">
-              <v-list-item-content>
-                <v-list-item-title>{{ item.nombre }}</v-list-item-title>
-                <v-list-item-subtitle>Cantidad: {{ getProductQuantity(item) }}</v-list-item-subtitle>
-                <v-list-item-subtitle>Precio: {{ item.precio }}</v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-          <v-divider></v-divider>
-          <h3>Total: {{ getTotalPrice() }}</h3>
-          <v-btn @click="pagarCarrito">Pagar</v-btn>
-        </v-col>
-      </v-row>
+      <v-dialog v-model="showCarrito" transition="dialog-bottom-transition" width="500">
+        <v-card style="background-color:#FFDEC8;">
+          <v-card-title style="text-align: center; justify-content: center;">
+            Tus compras
+          </v-card-title>
+          <v-card-text>
+            <v-col cols="12" v-for="item in cart" :key="item.id">
+              <v-row>
+                <v-col cols="3">
+                  <v-img
+                    v-if="item.archivos && item.archivos.length > 0"
+                    :src="item.archivos[0]"
+                    style="width: 60px; height: 60px;"
+                  />
+                </v-col>
+                <v-col cols="6">
+                  <p><b>{{ item.nombre }}</b></p>
+                  <p>{{ item.descripcion }}</p>
+                  <p><b>Cantidad:</b> {{ getProductQuantity(item) }}</p>
+                </v-col>
+                <v-col cols="3">
+                  <p><b>${{ item.precio }}</b></p>
+                </v-col>
+              </v-row>
+              <v-divider></v-divider>
+            </v-col>
+          </v-card-text>
+          <v-card-actions style="align-items: center; justify-content: center;">
+            <v-btn @click="pagarCarrito" color="green" block>
+              <span style="text-transform: none;">Pagar</span>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-col>
   </v-app>
 </template>
 <script>
-// import Stripe from 'stripe'
+import { loadStripe } from '@stripe/stripe-js'
 import AddProduct from '~/components/products/AddProduct.vue'
 export default {
   components: { AddProduct },
@@ -95,6 +116,7 @@ export default {
       productos: [],
       cart: [],
       showAdd: false,
+      showCarrito: false,
       search: ''
     }
   },
@@ -118,24 +140,18 @@ export default {
     addToCart (producto) {
       const index = this.cart.findIndex(item => item.id === producto.id)
       if (index !== -1) {
-        // Si el producto ya está en el carrito, incrementar la cantidad
         this.cart[index].cantidad++
       } else {
-        // Si el producto no está en el carrito, agregarlo
         this.cart.push({ ...producto, cantidad: 1 })
       }
     },
     removeFromCart (producto) {
-      // Agregar lógica para eliminar el producto del carrito
       const index = this.cart.findIndex(item => item.id === producto.id)
       if (index !== -1) {
-        // Obtener la referencia al objeto del carrito
         const cartItem = this.cart[index]
-        // Reducir la cantidad en 1 si la cantidad es mayor que 1
         if (cartItem.cantidad > 1) {
           cartItem.cantidad--
         } else {
-          // Si la cantidad es 1, eliminar el producto del carrito
           this.cart.splice(index, 1)
         }
       }
@@ -145,17 +161,22 @@ export default {
       return cartItem ? cartItem.cantidad : 0
     },
     getTotalPrice () {
-      // Calcular el precio total de los productos en el carrito
       return this.cart.reduce((total, item) => total + parseFloat(item.precio) * item.cantidad, 0)
     },
     async pagarCarrito () {
+      const stripe = await loadStripe('pk_test_51PHDADRxhro7mv4NzuaK8XWwETrOscnG5UTntaBHdHdn5B5aRvScRdWM4QYtuPlthKGrkYQNeEaFn8B9ZNQ58m2h00vE7b2dXJ')
       try {
         const response = await this.$axios.post('/create-stripe-session', {
-          carrito: this.cart
+          cartItems: this.cart
         })
-        window.location.href = `https://checkout.stripe.com/pay/${response.data.sessionId}`
+        const sessionId = response.data.id
+        const { error } = await stripe.redirectToCheckout({ sessionId })
+
+        if (error) {
+          console.error('Error during checkout:', error)
+        }
       } catch (error) {
-        console.error('Error al iniciar el pago: ', error)
+        console.error('Error creating checkout session:', error)
       }
     }
   }
