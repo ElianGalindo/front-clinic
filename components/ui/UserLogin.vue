@@ -173,6 +173,9 @@ export default {
       }).then(async (res) => {
         const result = await res.data
         if (result.message === 'success') {
+          const userData = result.user
+          console.log(userData)
+          localStorage.setItem('userData', JSON.stringify(userData))
           this.$store.commit('setToken', result.token)
           this.$router.push('/dashboard')
         }

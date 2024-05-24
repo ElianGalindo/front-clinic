@@ -36,6 +36,16 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-img
+        style="width: 60px;
+              height: 60px;
+              border-radius: 50%;
+              margin-left: 50px;"
+        v-if="userData"
+        :src="userData.archivos"
+      />
+      <p v-if="userData" style="margin-left: 70px; margin-bottom: -10px;">{{ userData.nombre }}</p>
+      <p v-if="userData" style="margin-left: 40px;">{{ userData.email }}</p>
     </v-navigation-drawer>
 
     <v-main>
@@ -59,12 +69,21 @@ export default {
         ['mdi-calendar-month', 'Schedule', '/dashboard/Schedule'],
         ['mdi-bed-outline', 'Patients', '/dashboard/Patients'],
         ['mdi-cart-outline', 'Order', '/dashboard/Orders']
-      ]
+      ],
+      userData: null
     }
   },
   methods: {
     selectItem (icon) {
       this.selectedIndex = icon
+    }
+  },
+  mounted () {
+    // Obtener los datos del usuario del almacenamiento local del navegador
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    if (userData) {
+      this.userData = userData
+      console.log(userData)
     }
   }
 }

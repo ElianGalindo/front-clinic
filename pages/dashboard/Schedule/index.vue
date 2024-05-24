@@ -122,7 +122,7 @@
             style="width: 260px; margin-top: 15px;"
           >
             <v-text-field
-              v-model="doctor"
+              v-model="doctorId"
               outlined
               rounded
               dense
@@ -178,7 +178,7 @@ export default {
       fecha: null,
       hora: null,
       motivo: null,
-      doctor: null,
+      doctorId: null,
       consultorio: null
     }
   },
@@ -190,7 +190,7 @@ export default {
         fecha: this.fecha,
         hora: this.hora,
         motivo: this.motivo,
-        doctor: this.doctor,
+        doctorId: this.doctorId,
         consultorio: this.consultorio
       }
       this.$axios.post(url, data)
@@ -202,7 +202,7 @@ export default {
             this.fecha = ''
             this.hora = ''
             this.motivo = ''
-            this.doctor = ''
+            this.doctorId = ''
             this.consultorio = ''
             const citasShowComponent = this.$refs.citasShow
             citasShowComponent.loadCitas()

@@ -105,6 +105,18 @@
           justify="center"
           class="inputAdd"
         >
+          <v-text-field
+            v-model="doctorId"
+            outlined
+            label="Doctor"
+            rounded
+          />
+        </v-row>
+        <v-row
+          align="center"
+          justify="center"
+          class="inputAdd"
+        >
           <input
             type="file"
             ref="archivosInput"
@@ -136,7 +148,8 @@ export default {
       sexo: '',
       telefono: null,
       direccion: null,
-      archivo: null
+      archivo: null,
+      doctorId: null
     }
   },
   methods: {
@@ -156,6 +169,7 @@ export default {
       data.append('telefono', this.telefono)
       data.append('direccion', this.direccion)
       data.append('archivo', this.archivo)
+      data.append('doctorId', this.doctorId)
       this.$axios
         .post(url, data, {
           headers: {
