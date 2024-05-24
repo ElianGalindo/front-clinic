@@ -65,7 +65,7 @@
           <v-col cols="5">
             <!-- Mostrar información de la cita-->
             <p style="font-size:23px;">Token I'd {{ cita.id }}</p>
-            <h2 style="margin-top:-7px;">{{ cita.doctor }}</h2>
+            <h2 style="margin-top:-7px;">Dr. {{ cita.doctor.nombre }}</h2>
             <v-row style="margin-top: 10px; margin-left: 1px;">
               <p style="font-size:15px;">{{ cita.fecha }}</p>&nbsp;&nbsp;&nbsp;
               <p style="font-size:15px;">{{ cita.hora }}</p>&nbsp;&nbsp;&nbsp;
@@ -101,7 +101,7 @@
     <v-dialog v-model="showUpdate" width="350">
           <v-card style="background-color:#FFDEC8;">
             <v-card-title>
-              Update Patient
+              Update Appointment
             </v-card-title>
             <v-card-text>
               <v-col>
@@ -113,7 +113,7 @@
                   <v-text-field
                     v-model="citaToUpdate.fecha"
                     outlined
-                    label="Nombre"
+                    label="Fecha"
                     rounded
                   />
                 </v-row>
@@ -125,7 +125,7 @@
                   <v-text-field
                     v-model="citaToUpdate.hora"
                     outlined
-                    label="A.paterno"
+                    label="Hora"
                     rounded
                   />
                 </v-row>
@@ -137,19 +137,7 @@
                   <v-text-field
                     v-model="citaToUpdate.motivo"
                     outlined
-                    label="A.materno"
-                    rounded
-                  />
-                </v-row>
-                <v-row
-                  align="center"
-                  justify="center"
-                  class="inputAdd"
-                >
-                  <v-text-field
-                    v-model="citaToUpdate.doctor"
-                    outlined
-                    label="Phone"
+                    label="Motivo"
                     rounded
                   />
                 </v-row>
@@ -161,7 +149,7 @@
                   <v-text-field
                     v-model="citaToUpdate.consultorio"
                     outlined
-                    label="Address"
+                    label="Consultorio"
                     rounded
                   />
                 </v-row>
@@ -253,7 +241,7 @@ export default {
           console.log('$$ res => ', res)
           if (res.data.message === 'success') {
             this.showUpdate = false
-            this.loadPacientes()
+            this.loadCitas()
           }
         })
         .catch((err) => {
