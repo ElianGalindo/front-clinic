@@ -36,16 +36,18 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-img
-        style="width: 60px;
-              height: 60px;
-              border-radius: 50%;
-              margin-left: 50px;"
-        v-if="userData"
-        :src="userData.archivos"
-      />
-      <p v-if="userData" style="margin-left: 70px; margin-bottom: -10px;">{{ userData.nombre }}</p>
-      <p v-if="userData" style="margin-left: 40px;">{{ userData.email }}</p>
+      <div style="padding: 10px; align-items: center; justify-content: center; text-align: center;">
+        <v-img
+          style="width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                margin-left: 60px;"
+          v-if="userData"
+          :src="userData.archivos[0]"
+        />
+        <p v-if="userData" style="margin-bottom: -7px;">{{ userData.nombre }} {{ userData.apaterno }}</p>
+        <p v-if="userData">{{ userData.email }}</p>
+      </div>
     </v-navigation-drawer>
 
     <v-main>
