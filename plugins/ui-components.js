@@ -12,6 +12,8 @@ import AddPrescription from '@/components/pacients/AddPrescription.vue'
 import AddCheckup from '@/components/pacients/AddCheckup.vue'
 import AddProduct from '@/components/products/AddProduct.vue'
 import CartShow from '@/components/products/CartShow.vue'
+import NoticiasView from '@/components/dashboard/NoticiasView.vue'
+import MedicationView from '@/components/dashboard/MedicationView.vue'
 
 Vue.component('UserLogin', UserLogin)
 Vue.component('PacientShow', PacientShow)
@@ -26,3 +28,5 @@ Vue.component('AddPrescription', AddPrescription)
 Vue.component('AddCheckup', AddCheckup)
 Vue.component('AddProduct', AddProduct)
 Vue.component('CartShow', CartShow)
+Vue.component('NoticiasView', NoticiasView)
+Vue.component('MedicationView', MedicationView)

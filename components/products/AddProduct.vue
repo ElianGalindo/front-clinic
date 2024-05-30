@@ -19,6 +19,19 @@
       style="width: 260px; margin-top: 15px;"
     >
       <v-text-field
+        v-model="doctorId"
+        outlined
+        rounded
+        dense
+        label="Doctor Email"
+      />
+    </v-row>
+    <v-row
+      align="center"
+      justify="center"
+      style="width: 260px; margin-top: 15px;"
+    >
+      <v-text-field
         v-model="nombre"
         outlined
         rounded
@@ -105,6 +118,7 @@
 export default {
   data () {
     return {
+      doctorId: null,
       nombre: null,
       precio: null,
       descripcion: null,
@@ -119,6 +133,7 @@ export default {
     registrarProducto () {
       const url = '/products/create'
       const data = new FormData()
+      data.append('doctorId', this.doctorId)
       data.append('nombre', this.nombre)
       data.append('precio', this.precio)
       data.append('descripcion', this.descripcion)
