@@ -72,7 +72,7 @@
               outlined
               rounded
               dense
-              label="Email"
+              label="Paciente Email"
             />
           </v-row>
           <v-row
@@ -126,7 +126,7 @@
               outlined
               rounded
               dense
-              label="Doctor"
+              label="Doctor Email"
             />
           </v-row>
           <v-row

@@ -148,7 +148,7 @@ export default {
           console.log('$$ res => ', res)
           if (res.data.message === 'Product Registered Successfully') {
             this.$emit('close')
-            this.$emit('product-added')
+            this.$emit('agregar-producto')
           }
         })
         .catch((error) => {

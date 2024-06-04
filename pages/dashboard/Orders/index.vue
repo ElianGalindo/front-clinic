@@ -30,7 +30,7 @@
             <span style="text-transform: none; color: white;">Shop <v-icon>mdi-cart-outline</v-icon></span>
           </v-btn>
           <v-dialog v-model="showAdd" persistent transition="dialog-bottom-transition" width="400">
-            <add-product @close="showAdd = false"/>
+            <add-product @close="showAdd = false" @agregar-producto="loadProductos"/>
           </v-dialog>
         </v-col>
       </v-row>
