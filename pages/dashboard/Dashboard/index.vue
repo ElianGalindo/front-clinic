@@ -53,10 +53,6 @@
                   <p style="font-size: 13px;"><b>Address </b>{{ citaMasReciente.paciente.direccion }}</p>
                 </v-col>
               </v-row>
-              <v-row style="margin-top: -15px;">
-                <v-col cols="2"><v-icon style="color: red; font-size: 25px;">mdi-close-circle-outline</v-icon></v-col>
-                <v-col cols="10"><p style="font-size: 13px; margin-left: -15px;">Cancel Booking</p></v-col>
-              </v-row>
             </v-col>
           </div>
         </v-col>
@@ -73,6 +69,19 @@
           <p><b>Medication</b></p>
           <div class="medicationContainer">
             <medication-view />
+          </div>
+        </v-col>
+        <v-col cols="9">
+          <p><b>Information</b></p>
+          <div class="infoContainer">
+            <v-col cols="12">
+              <h2>Healthy People</h2>
+              <p class="infoText">Hi and welcome to this clinic. At Healthy People, we are committed to and care about providing good service to our patients.</p>
+              <h4>On this page you can... </h4>
+              <p class="infoText">-Register, edit and delete appointments at your clinic </p>
+              <p class="infoText">-Register, edit and delete patients at your clinic, as well as create prescriptions and notes for your patients</p>
+              <p class="infoText">-Add medicine and purchase your necessary medications online</p>
+            </v-col>
           </div>
         </v-col>
       </v-row>
@@ -136,5 +145,17 @@ export default {
   .medicationContainer{
     width: 270px;
     height: 242px;
+  }
+  .infoContainer {
+    width: 676px;
+    height: 252px;
+    border-radius: 24px;
+    background-color: #FFDEC8;
+    font-size: 17px;
+  }
+  .infoText {
+    font-size: 17px;
+    margin-bottom: -5px;
+    background-color: #FFDEC8;
   }
 </style>

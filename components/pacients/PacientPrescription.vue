@@ -22,13 +22,49 @@
           <p class="letra2">{{ prescripcion.fecha }}</p>&nbsp;&nbsp;
           <p class="letra2">{{ prescripcion.hora }}</p>
         </v-row>
+        <v-row>
+          <v-btn
+              style="width: 40px; height: 25px; border-radius: 20px; background-color: rgb(237, 96, 96); margin-left: 100px;"
+              @click="deletePrescription(prescripcion)"
+            >
+              <v-icon color="white">mdi-trash-can</v-icon>
+            </v-btn>
+        </v-row>
       </v-col>
     </v-row>
+    <v-dialog v-model="showDelete" width="300">
+      <v-card style="background-color:#FFDEC8;">
+        <v-card-title>
+          Delete Prescription
+        </v-card-title>
+        <v-card-text> Are you sure?</v-card-text>
+        <v-card-actions>
+          <v-col>
+              <v-col cols="6">
+                <v-btn block color="green" @click="borrarPrescripcion">
+                  <span style="text-transform: none; color:white;">Delete</span>
+                </v-btn>
+              </v-col>
+              <v-col cols="6">
+                <v-btn block color="red" @click="showDelete">
+                  <span style="text-transform: none; color:white;">Cancel</span>
+                </v-btn>
+              </v-col>
+            </v-col>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-col>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      prescriptionToDelete: null,
+      showDelete: false
+    }
+  },
   props: {
     paciente: {
       type: Object,
@@ -37,6 +73,26 @@ export default {
     prescripciones: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    deletePrescription (prescripcion) {
+      this.prescriptionToDelete = prescripcion
+      this.showDelete = true
+    },
+    borrarPrescripcion () {
+      const url = `/prescripcion/${this.prescriptionToDelete.id}`
+      this.$axios.delete(url)
+        .then((res) => {
+          console.log('$$ res => ', res)
+          if (res.status === 204) {
+            this.showDelete = false
+            this.$emit('prescripcion-eliminado')
+          }
+        })
+        .catch((err) => {
+          console.log('$$ err => ', err)
+        })
     }
   }
 }

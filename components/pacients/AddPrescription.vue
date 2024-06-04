@@ -23,7 +23,7 @@
         outlined
         rounded
         dense
-        label="Email"
+        label="Paciente Email"
       />
     </v-row>
     <v-row

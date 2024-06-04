@@ -37,7 +37,7 @@ export default {
         url: 'https://google-news13.p.rapidapi.com/health',
         params: { lr: 'en-US' },
         headers: {
-          'x-rapidapi-key': '8608917c9emsh7f5e6b12a812d15p1f34cbjsnbb86019cb253',
+          'x-rapidapi-key': '12706adb38mshe069a4b51f27d2cp1a672fjsndbd7bfa1b386',
           'x-rapidapi-host': 'google-news13.p.rapidapi.com'
         }
       }

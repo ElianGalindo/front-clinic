@@ -133,8 +133,8 @@
               </v-col>
               <v-col cols="12">
                 <v-row>
-                  <pacient-prescription v-if="paciente.prescripcionVisible" :paciente="paciente" :prescripciones="paciente.prescripciones"/>
-                  <pacient-checkup v-if="paciente.checkupVisible" :paciente="paciente" :checkups="paciente.checkups" />
+                  <pacient-prescription v-if="paciente.prescripcionVisible" :paciente="paciente" :prescripciones="paciente.prescripciones" @prescripcion-eliminado = "mostrarPrescripcion(paciente)"/>
+                  <pacient-checkup v-if="paciente.checkupVisible" :paciente="paciente" :checkups="paciente.checkups" @checkup-eliminado = "mostrarCheckup(paciente)"/>
                   <pacient-documents v-if="paciente.documentVisible" :paciente="paciente" :documents="paciente.documents"/>
                   <pacient-payments v-if="paciente.paymentVisible" :paciente="paciente" :payments="paciente.payments"/>
                 </v-row>

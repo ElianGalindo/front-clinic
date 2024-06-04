@@ -40,6 +40,7 @@ export default {
   .tablaCont{
     align-content: center;
     justify-content: center;
+    margin-left: 150px;
   }
   td, th{
     padding-left: 100px; /* Espacio a la izquierda */
