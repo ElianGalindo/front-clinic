@@ -1,6 +1,6 @@
 <template>
   <div>
-    Hola JEJEJE
+    Bienvenidos
   </div>
 </template>
 <script>

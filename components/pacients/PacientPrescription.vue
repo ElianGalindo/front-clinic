@@ -46,7 +46,7 @@
                 </v-btn>
               </v-col>
               <v-col cols="6">
-                <v-btn block color="red" @click="showDelete">
+                <v-btn block color="red" @click="showDelete = false">
                   <span style="text-transform: none; color:white;">Cancel</span>
                 </v-btn>
               </v-col>
